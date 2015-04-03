@@ -1,49 +1,72 @@
-/*
-Error: Invalid CSS after "...d:"xxx", winner": expected ";", was ":"id1", playerI..."
-        on line 24 of public/modules/games/css/games.scss
+body {
+  background: url(../../core/img/brand/beerpongbg.jpg) no-repeat 50% 50% fixed;
+  background-size: cover;
+  background-size: cover;
+  color: #fff;
+  font-family: 'Open Sans', sans-serif;
+  color: white; }
 
-19: [
-20: 	// round 1
-21: 	[
-22: 		// matches
-23: 		[
-24: 			{ gameId:"xxx", winner:"id1", playerId1:"id1", playerScore1:"21", playerId2:"id1", playerScore3:"21" },
-25: 			{ gameId:"xxx", winner:"id1", playerId1:"id1", playerScore1:"21", playerId2:"id1", playerScore3:"21" },
-26: 			{ gameId:"xxx", winner:"id1", playerId1:"id1", playerScore1:"21", playerId2:"id1", playerScore3:"21" },
-27: 			{ gameId:"xxx", winner:"id1", playerId1:"id1", playerScore1:"21", playerId2:"id1", playerScore3:"21" }			
-28: 		],
-29: 	],
+.page-header {
+  text-align: center; }
 
-Backtrace:
-public/modules/games/css/games.scss:24
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.13/lib/sass/scss/parser.rb:1165:in `expected'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.13/lib/sass/scss/parser.rb:1101:in `expected'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.13/lib/sass/scss/parser.rb:1096:in `tok!'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.13/lib/sass/scss/parser.rb:761:in `block in try_declaration'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.13/lib/sass/scss/parser.rb:1141:in `call'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.13/lib/sass/scss/parser.rb:1141:in `rethrow'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.13/lib/sass/scss/parser.rb:766:in `try_declaration'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.13/lib/sass/scss/parser.rb:696:in `declaration_or_ruleset'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.13/lib/sass/scss/parser.rb:661:in `block_child'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.13/lib/sass/scss/parser.rb:650:in `block_contents'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.13/lib/sass/scss/parser.rb:642:in `block'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.13/lib/sass/scss/parser.rb:635:in `ruleset'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.13/lib/sass/scss/parser.rb:660:in `block_child'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.13/lib/sass/scss/parser.rb:653:in `block_contents'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.13/lib/sass/scss/parser.rb:117:in `stylesheet'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.13/lib/sass/scss/parser.rb:42:in `parse'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.13/lib/sass/engine.rb:393:in `_to_tree'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.13/lib/sass/engine.rb:368:in `_render_with_sourcemap'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.13/lib/sass/engine.rb:285:in `render_with_sourcemap'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.13/lib/sass/exec/sass_scss.rb:407:in `run'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.13/lib/sass/exec/sass_scss.rb:63:in `process_result'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.13/lib/sass/exec/base.rb:52:in `parse'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.13/lib/sass/exec/base.rb:19:in `parse!'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.13/bin/sass:13:in `<top (required)>'
-/usr/bin/sass:23:in `load'
-/usr/bin/sass:23:in `<main>'
-*/
-body:before {
-  white-space: pre;
-  font-family: monospace;
-  content: "Error: Invalid CSS after \"...d:\"xxx\", winner\": expected \";\", was \":\"id1\", playerI...\"\A         on line 24 of public/modules/games/css/games.scss\A \A 19: [\A 20: 	// round 1\A 21: 	[\A 22: 		// matches\A 23: 		[\A 24: 			{ gameId:\"xxx\", winner:\"id1\", playerId1:\"id1\", playerScore1:\"21\", playerId2:\"id1\", playerScore3:\"21\" },\A 25: 			{ gameId:\"xxx\", winner:\"id1\", playerId1:\"id1\", playerScore1:\"21\", playerId2:\"id1\", playerScore3:\"21\" },\A 26: 			{ gameId:\"xxx\", winner:\"id1\", playerId1:\"id1\", playerScore1:\"21\", playerId2:\"id1\", playerScore3:\"21\" },\A 27: 			{ gameId:\"xxx\", winner:\"id1\", playerId1:\"id1\", playerScore1:\"21\", playerId2:\"id1\", playerScore3:\"21\" }			\A 28: 		],\A 29: 	],"; }
+.brackets.main {
+  overflow-x: hidden;
+  min-height: 400px;
+  color: #fff;
+  font-family: 'Open Sans', sans-serif; }
+  .brackets.main .rounds-wrapper {
+    overflow-x: scroll;
+    min-width: 1120px; }
+    .brackets.main .rounds-wrapper .round {
+      float: left;
+      width: 260px;
+      margin: 5px 10px;
+      /*&.first-round*/ }
+      .brackets.main .rounds-wrapper .round.active h3 {
+        border-top: 3px solid white; }
+      .brackets.main .rounds-wrapper .round h3 {
+        border-top: 3px solid rgba(192, 192, 192, 0.3);
+        width: 100%;
+        padding-top: 10px;
+        margin-right: 4px;
+        font-size: 18px;
+        font-weight: 400;
+        text-indent: 12px;
+        white-space: nowrap; }
+
+.player-box {
+  background-color: #666;
+  width: 240px;
+  /*height: 80px;*/
+  /*padding: 10px 0 0;*/
+  border-radius: 15px;
+  text-align: center;
+  margin: 5px auto;
+  float: left;
+  display: block; }
+  .player-box ul {
+    width: 240px;
+    margin: 0 auto;
+    padding: 0; }
+    .player-box ul li {
+      display: inline-block;
+      text-align: center; }
+  .player-box p {
+    margin: 0; }
+  .player-box .vs {
+    top: -40px;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 12px;
+    padding: 0 5px; }
+  .player-box .profile-pic {
+    display: inline-block;
+    float: left;
+    margin: 0 auto;
+    border-radius: 50%; }
+
+.brackets.main .rounds-wrapper:after, .brackets.main .rounds-wrapper .round:after {
+  content: " ";
+  display: block;
+  clear: both; }
+
+/*# sourceMappingURL=games.css.map */

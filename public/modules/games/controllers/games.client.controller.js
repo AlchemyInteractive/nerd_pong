@@ -3,32 +3,34 @@
 angular.module('games').controller('GamesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Games',
 	function($scope, $stateParams, $location, Authentication, Games ) {
     
-    $scope.config = function(){
-      return {
-        bracket: [
-          [
-            {matchId: 1934980, player1Score: 21, player2Score: 18, winner: 1230, player1Id: 1230, player2Id:2340},
-            {matchId: 1934981, player1Score: 19, player2Score: 21, winner: 2341, player1Id: 1231, player2Id:2341},
-            {matchId: 1934982, player1Score: 17, player2Score: 21, winner: 2342, player1Id: 1232, player2Id:2342},
-            {matchId: 1934983, player1Score: 21, player2Score: 18, winner: 1233, player1Id: 1233, player2Id:2343},
-            {matchId: 1934984, player1Score: 21, player2Score: 18, winner: 2344, player1Id: 1234, player2Id:2344},
-            {matchId: 1934985, player1Score: 17, player2Score: 21, winner: 2345, player1Id: 1235, player2Id:2345},
-            {matchId: 1934986, player1Score: 10, player2Score: 21, winner: 2346, player1Id: 1236, player2Id:2346},
-            {matchId: 1934987, player1Score: 21, player2Score: 18, winner: 1237, player1Id: 1237, player2Id:2347}
-          ],
-          [
-            {matchId: 1934988, player1Score: 21, player2Score: 18, winner: 1230, player1Id: 1230, player2Id:2341},
-            {matchId: 1934989, player1Score: 19, player2Score: 21, winner: 2341, player1Id: 1231, player2Id:2341},
-            {matchId: 1934990, player1Score: 17, player2Score: 21, winner: 2342, player1Id: 1232, player2Id:2342},
-            {matchId: 1934991, player1Score: 21, player2Score: 18, winner: 1233, player1Id: 1233, player2Id:2343}
-          ]
-        ],
-        users: [
-      
-        ]
-      }      
-    };
-
+	    $scope.config = {
+	        bracket: [
+	          [
+	            {matchId: "m1", player1Score: 21, player2Score: 18, winner: "p1", player1Id: "p1", player2Id:"p2"},
+	            {matchId: "m2", player1Score: 19, player2Score: 21, winner: "p4", player1Id: "p3", player2Id:"p4"},
+	            {matchId: "m3", player1Score: 17, player2Score: 21, winner: "p6", player1Id: "p5", player2Id:"p6"},
+	            {matchId: "m4", player1Score: 21, player2Score: 18, winner: "p7", player1Id: "p7", player2Id:"p8"},
+	          ],
+	          [
+	            {matchId: "m5", player1Score: 21, player2Score: 18, winner: "p1", player1Id: "p1", player2Id:"p4"},
+	            {matchId: "m6", player1Score: 19, player2Score: 21, winner: "p7", player1Id: "p6", player2Id:"p7"},
+	          ],
+	          [
+	            {matchId: "m8", player1Score: 19, player2Score: 21, winner: "p7", player1Id: "p1", player2Id:"p7"},
+	          ]
+	        ],
+	        users: [
+	      		{ userId: "p1", name: "p1", img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
+	      		{ userId: "p2", name: "p2", img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
+	      		{ userId: "p3", name: "p3", img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
+	      		{ userId: "p4", name: "p4", img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
+	      		{ userId: "p5", name: "p5", img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
+	      		{ userId: "p6", name: "p6", img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
+	      		{ userId: "p7", name: "p7", img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
+	      		{ userId: "p8", name: "p8", img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'}
+	      	]
+	    };      
+	    
 		$scope.authentication = Authentication;
 
 		$scope.create = function() {
@@ -83,11 +85,7 @@ angular.module('games').controller('GamesController', ['$scope', '$stateParams',
 			});
 		};
 
-
-		/****** Scroll logic ******/
-		// $(document).ready(function() {
-
-$scope.initScroller = function() {
+		$scope.initializeScroller = function() {
  
 		  var $dom = $(document),
 		      $roundsWrapper = $('.rounds-wrapper'),
@@ -143,11 +141,91 @@ $scope.initScroller = function() {
 		      $roundsWrapper.animate({'margin-left':(-ROUND_WIDTH)+'px'}, 300, function() { isAnimating = false; });
 		    else 
 		      $roundsWrapper.animate({'margin-left':'0px'}, 300, function() { isAnimating = false; });
-		  }
-		 
-		// });
-};
+		  } 
+		};
 
+		$scope.refreshRounds = function() {
+			var $template = $('.template-player-box'),
+				$templateWinner = $('.template-player-winner'),
+				$rounds = $('.rounds-wrapper .round'),
+				numRounds , numMatches, r, m, count,
+				round = null, $roundElem, $matchesWrapper, $matchElem,
+				match = null, user1, user2;
+
+			// $.each($rounds, function( index, value ) {
+			// 	if ( index == numRounds ) $($rounds[index]).addClass('active');
+			// 	else $($rounds[index]).removeClass('active');
+			// });
+			numRounds = $scope.config.bracket.length
+			for ( r=0; r<numRounds; r++ ) {
+				round = $scope.config.bracket[r];
+				$roundElem = $($rounds[r]);
+				$matchesWrapper = $roundElem.find('.matches-wrapper');
+				$matchesWrapper.empty();
+				// check each match to find out if round is complete
+				numMatches = round.length;
+				count = 0;
+				for ( m=0; m<numMatches; m++ ) {
+					match = round[m];
+					
+					$matchElem = $template.contents().clone();
+					user1 = getUserById(match.player1Id);
+					user2 = getUserById(match.player2Id);
+					/** make the logic dynamic to handle deeper brackets **/
+					if ( r == 0)
+						$matchElem.css('height', '80px').css('padding-top', '10px');
+					else if ( r == 1)
+						$matchElem.css('height', '170px').css('padding-top', '60px');
+					else if ( r == 2)
+						$matchElem.css('height', '350px').css('padding-top', '150px');
+					
+					
+					// $matchElem.css({'height': (MATCH_HEIGHT * (r+1) + (20*(r+1)))+'px', 'padding-top': (MATCH_PADDING)+'px' })
+					$matchElem.find('.player-1 img').attr('src', user1.img);
+					$matchElem.find('.player-1 p').text(user1.name);
+					$matchElem.find('.vs').text('Table '+(m+1));
+					$matchElem.find('.player-2 img').attr('src', user2.img);
+					$matchElem.find('.player-2 p').text(user2.name);
+					$matchesWrapper.append( $matchElem );
+					
+
+					if ( match.winner != "" ) count++;
+
+				}
+				// if ( count == numMatches) $roundElem.addClass('active');
+				// else $roundElem.removeClass('active');
+
+
+			}  
+
+			// check if we have a winner
+			if ( numRounds > 2 && $scope.config.bracket[2] != '' ) {
+				match = $scope.config.bracket[2][0];
+				if ( !match )return;
+				$roundElem = $($rounds[3]);
+				$matchElem = $templateWinner.contents().clone();
+				user1 = getUserById(match.winner);
+				console.log("winner", match, match.winner)
+				$matchesWrapper = $roundElem.find('.matches-wrapper');
+				$matchElem.find('.winner img').attr('src', user1.img);
+				$matchElem.find('.winner p').text(user1.name);
+				$matchesWrapper.append( $matchElem );
+				$matchElem.css('height', '350px').css('padding-top', '150px');
+
+				// numMatches = round.length;
+				// for ( m=0; m<numMatches; m++ ) {
+				// }
+			}
+
+
+		};
+		
+		function getUserById(id){
+			for ( var i=0, l=$scope.config.users.length; i<l; i++ ) 
+				if ( id == $scope.config.users[i].userId ) 
+					return $scope.config.users[i];
+			return null;
+		}
 	}
 ]);
 

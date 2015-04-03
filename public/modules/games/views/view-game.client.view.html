@@ -1,47 +1,66 @@
-<section data-ng-controller="GamesController" data-ng-init="initScroller()">
+<section data-ng-controller="GamesController" data-ng-init="initializeScroller()">
+
 
 <div role="main" class="brackets main">
-  <div class="rounds-wrapper">
 
-    <div class="round first-round" ng-class="{active: 'derp' == 'derp' }">
+  <div class="rounds-wrapper" data-ng-init="refreshRounds()">
+
+    <div class="round first-round">
       <h3>1st Round</h3>
-
-  
-      <div class="player-box" ng-repeat="i in [1,2,3,4,5]">
-        <ul>
-          <li class="player-1">
-            <img class="profile-pic" src="http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png"/>
-            <p>name</p>
-          </li>
-          <li class="vs">Table X</li>
-          <li class="player-2">
-            <img class="profile-pic" src="http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png"/>
-            <p>name</p>
-          </li>
-        </ul>
+      <div class="matches-wrapper">
       </div>
     </div>
-
    
     <div class="round second-round">
       <h3>2nd Round</h3>
+      <div class="matches-wrapper">
+      </div>
     </div>
 
 
     <div class="round final-round">
       <h3>Final Round</h3>
+      <div class="matches-wrapper">
+      </div>
     </div>
 
 
     <div class="round champion">
       <h3>Champion</h3>
+      <div class="matches-wrapper">
+      </div>
     </div>
   </div>
 </div>
 
 
+<div class="template-player-box" style="display:none;">
+      <div class="player-box">
+        <ul>
+          <li class="player-1">
+            <img class="profile-pic" src="http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png"/>
+            <p></p>
+          </li>
+          <li class="vs">Table X</li>
+          <li class="player-2">
+            <img class="profile-pic" src="http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png"/>
+            <p></p>
+          </li>
+        </ul>
+      </div>
+</div>
 
 
+<div class="template-player-winner" style="display:none;">
+      <div class="player-box">
+      	<ul>
+          <li class="winner">
+        	<img class="profile-pic" src="http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png"/>
+        	<p></p>
+       	  </li>
+       	</ul>
+      </div>
+</div>
 
 <!-- 	<small>
 		<em class="text-muted">

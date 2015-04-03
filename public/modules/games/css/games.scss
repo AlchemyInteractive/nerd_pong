@@ -15,24 +15,6 @@ body {
 	}
 }
 
-// game(s)
-[
-	// round 1
-	[
-		// matches
-		[
-			{ gameId:"xxx", winner:"id1", playerId1:"id1", playerScore1:"21", playerId2:"id1", playerScore3:"21" },
-			{ gameId:"xxx", winner:"id1", playerId1:"id1", playerScore1:"21", playerId2:"id1", playerScore3:"21" },
-			{ gameId:"xxx", winner:"id1", playerId1:"id1", playerScore1:"21", playerId2:"id1", playerScore3:"21" },
-			{ gameId:"xxx", winner:"id1", playerId1:"id1", playerScore1:"21", playerId2:"id1", playerScore3:"21" }			
-		],
-	],
-	// round 2
-	[
-	]
-
-]
-
 .brackets.main {
 
   overflow-x: hidden;
@@ -80,8 +62,8 @@ body {
 .player-box {
   background-color: #666;
   width: 240px;
-  height: 80px;
-  padding: 5px;
+  /*height: 80px;*/
+  /*padding: 10px 0 0;*/
   border-radius: 15px;
   text-align: center;
   margin: 5px auto;
@@ -95,6 +77,9 @@ body {
       display: inline-block;  
       text-align: center;
     } 
+  }
+  p {
+  	margin: 0;
   }
   .vs { 
     top: -40px;
