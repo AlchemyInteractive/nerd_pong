@@ -1,16 +1,49 @@
-<section data-ng-controller="GamesController" data-ng-init="findOne()">
-	<div class="page-header">
-		<h1 data-ng-bind="game.title"></h1>
-	</div>
-	<div class="pull-right" data-ng-show="authentication.user._id == game.user._id">
-		<a class="btn btn-primary" href="/#!/games/{{game._id}}/edit">
-			<i class="glyphicon glyphicon-edit"></i>
-		</a>
-		<a class="btn btn-primary" data-ng-click="remove();">
-			<i class="glyphicon glyphicon-trash"></i>
-		</a>
-	</div>
-	<small>
+<section data-ng-controller="GamesController" data-ng-init="initScroller()">
+
+<div role="main" class="brackets main">
+  <div class="rounds-wrapper">
+
+    <div class="round first-round" ng-class="{active: 'derp' == 'derp' }">
+      <h3>1st Round</h3>
+
+  
+      <div class="player-box" ng-repeat="i in [1,2,3,4,5]">
+        <ul>
+          <li class="player-1">
+            <img class="profile-pic" src="http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png"/>
+            <p>name</p>
+          </li>
+          <li class="vs">Table X</li>
+          <li class="player-2">
+            <img class="profile-pic" src="http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png"/>
+            <p>name</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+   
+    <div class="round second-round">
+      <h3>2nd Round</h3>
+    </div>
+
+
+    <div class="round final-round">
+      <h3>Final Round</h3>
+    </div>
+
+
+    <div class="round champion">
+      <h3>Champion</h3>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<!-- 	<small>
 		<em class="text-muted">
 			Posted on
 			<span data-ng-bind="game.created | date:'mediumDate'"></span>
@@ -18,5 +51,5 @@
 			<span data-ng-bind="game.user.displayName"></span>
 		</em>
 	</small>
-	<p class="lead" data-ng-bind="game.content"></p>
+	<p class="lead" data-ng-bind="game.content"></p> -->
 </section>

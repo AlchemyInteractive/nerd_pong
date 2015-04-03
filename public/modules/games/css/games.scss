@@ -14,3 +14,106 @@ body {
 	h3 {
 	}
 }
+
+// game(s)
+[
+	// round 1
+	[
+		// matches
+		[
+			{ gameId:"xxx", winner:"id1", playerId1:"id1", playerScore1:"21", playerId2:"id1", playerScore3:"21" },
+			{ gameId:"xxx", winner:"id1", playerId1:"id1", playerScore1:"21", playerId2:"id1", playerScore3:"21" },
+			{ gameId:"xxx", winner:"id1", playerId1:"id1", playerScore1:"21", playerId2:"id1", playerScore3:"21" },
+			{ gameId:"xxx", winner:"id1", playerId1:"id1", playerScore1:"21", playerId2:"id1", playerScore3:"21" }			
+		],
+	],
+	// round 2
+	[
+	]
+
+]
+
+.brackets.main {
+
+  overflow-x: hidden;
+  min-height: 400px;
+  color: #fff;
+  font-family: 'Open Sans', sans-serif;
+  
+
+  .rounds-wrapper {
+
+    overflow-x: scroll;
+    min-width: 1120px;
+    @extend %clearfix;
+
+    .round {
+      @extend %clearfix;
+      float: left;
+      width: 260px;
+      margin: 5px 10px;
+
+      /*&.first-round*/
+      
+      &.active {
+        h3 {
+          border-top: 3px solid rgba(255, 255, 255, 1);
+        }
+      }
+      h3 {
+        border-top: 3px solid rgba(192,192,192,0.3);
+        width: 100%;
+        padding-top: 10px;
+        margin-right: 4px;
+        font-size: 18px;
+        font-weight: 400;
+        text-indent: 12px;
+        white-space: nowrap;
+      }
+
+      
+    }
+  }
+}
+
+
+.player-box {
+  background-color: #666;
+  width: 240px;
+  height: 80px;
+  padding: 5px;
+  border-radius: 15px;
+  text-align: center;
+  margin: 5px auto;
+  float:left;
+  display:block;
+  ul {
+    width: 240px;
+    margin: 0 auto;
+    padding: 0;
+    li {
+      display: inline-block;  
+      text-align: center;
+    } 
+  }
+  .vs { 
+    top: -40px;
+    color: rgba(255,255,255,0.5);
+    font-size: 12px;
+    padding: 0 5px;
+  }
+  .profile-pic {
+    display:inline-block;
+    float:left;
+    margin: 0 auto;
+    border-radius: 50%;
+  }             
+}
+
+%clearfix {
+    &:after {
+        content: " ";
+        display: block;
+        clear: both;
+    }
+}

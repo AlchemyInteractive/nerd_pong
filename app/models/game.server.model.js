@@ -23,10 +23,10 @@ var GameSchema = new Schema({
 	},
 	bracket: {
 		type: Array,
-		default: ''
+		default: '',
 		round: {
 			type: Mixed,
-			default: ''
+			default: '',
 			match: {
 				type: Number,
 				default: ''
