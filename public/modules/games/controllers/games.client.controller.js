@@ -2,32 +2,39 @@
 
 angular.module('games').controller('GamesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Games',
 	function($scope, $stateParams, $location, Authentication, Games ) {
+     var self = this;
     
-    $scope.config = function(){
-      return {
-        bracket: [
-          [
-            {matchId: 1934980, player1Score: 21, player2Score: 18, winner: 1230, player1Id: 1230, player2Id:2340},
-            {matchId: 1934981, player1Score: 19, player2Score: 21, winner: 2341, player1Id: 1231, player2Id:2341},
-            {matchId: 1934982, player1Score: 17, player2Score: 21, winner: 2342, player1Id: 1232, player2Id:2342},
-            {matchId: 1934983, player1Score: 21, player2Score: 18, winner: 1233, player1Id: 1233, player2Id:2343},
-            {matchId: 1934984, player1Score: 21, player2Score: 18, winner: 2344, player1Id: 1234, player2Id:2344},
-            {matchId: 1934985, player1Score: 17, player2Score: 21, winner: 2345, player1Id: 1235, player2Id:2345},
-            {matchId: 1934986, player1Score: 10, player2Score: 21, winner: 2346, player1Id: 1236, player2Id:2346},
-            {matchId: 1934987, player1Score: 21, player2Score: 18, winner: 1237, player1Id: 1237, player2Id:2347}
-          ],
-          [
-            {matchId: 1934988, player1Score: 21, player2Score: 18, winner: 1230, player1Id: 1230, player2Id:2341},
-            {matchId: 1934989, player1Score: 19, player2Score: 21, winner: 2341, player1Id: 1231, player2Id:2341},
-            {matchId: 1934990, player1Score: 17, player2Score: 21, winner: 2342, player1Id: 1232, player2Id:2342},
-            {matchId: 1934991, player1Score: 21, player2Score: 18, winner: 1233, player1Id: 1233, player2Id:2343}
-          ]
-        ],
-        users: [
-      
-        ]
-      }      
-    };
+     $scope.config = function(){
+     return {
+       bracket: [
+         [
+           {matchId: "m1", player1Score: 21, player2Score: 18, winner: "p1", player1Id: "p1", player2Id:"p2"},
+           {matchId: "m2", player1Score: 19, player2Score: 21, winner: "p4", player1Id: "p3", player2Id:"p4"},
+           {matchId: "m3", player1Score: 17, player2Score: 21, winner: "p6", player1Id: "p5", player2Id:"p6"},
+           {matchId: "m4", player1Score: 21, player2Score: 18, winner: "p7", player1Id: "p7", player2Id:"p8"},
+         ],
+         [
+           {matchId: "m5", player1Score: 21, player2Score: 18, winner: "p1", player1Id: "p1", player2Id:"p4"},
+           {matchId: "m6", player1Score: 19, player2Score: 21, winner: "p7", player1Id: "p6", player2Id:"p7"},
+         ],
+         [
+           {matchId: "m8", player1Score: 19, player2Score: 21, winner: "p7", player1Id: "p1", player2Id:"p7"},
+         ]
+       ],
+       users: [
+      { userId: "p1", name: "p1", img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
+      { userId: "p2", name: "p2", img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
+      { userId: "p3", name: "p3", img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
+      { userId: "p4", name: "p4", img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
+      { userId: "p5", name: "p5", img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
+      { userId: "p6", name: "p6", img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
+      { userId: "p7", name: "p7", img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
+      { userId: "p8", name: "p8", img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'}
+      ]
+     }      
+   };
+
+    $scope.users = [];
 
 		$scope.authentication = Authentication;
 
@@ -80,6 +87,9 @@ angular.module('games').controller('GamesController', ['$scope', '$stateParams',
 			$scope.game = Games.get({
 				gameId: $stateParams.gameId
 			});
+      self.configure = {};
+      self.configure.bracket = $scope.game;
 		};
+  
 	}
 ]);
