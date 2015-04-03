@@ -1,7 +1,7 @@
 'use strict';
 
 (function() {
-	// Articles Controller Spec
+	// games Controller Spec
 	describe('GamesController', function() {
 		// Initialize global variables
 		var GamesController,
@@ -50,14 +50,14 @@
 			});
 		}));
 
-		it('$scope.find() should create an array with at least one article object fetched from XHR', inject(function(Games) {
-			// Create sample article using the Games service
+		it('$scope.find() should create an array with at least one game object fetched from XHR', inject(function(Games) {
+			// Create sample game using the Games service
 			var sampleGame = new Games({
 				title: 'An Game about MEAN',
 				content: 'MEAN rocks!'
 			});
 
-			// Create a sample Games array that includes the new article
+			// Create a sample Games array that includes the new game
 			var sampleGames = [sampleGame];
 
 			// Set GET response
@@ -71,8 +71,9 @@
 			expect(scope.games).toEqualData(sampleGames);
 		}));
 
-		it('$scope.findOne() should create an array with one article object fetched from XHR using a articleId URL parameter', inject(function(Articles) {
-			// Define a sample article object
+		it('$scope.findOne() should create an array with one game object fetched from XHR using a gameId URL parameter', inject(function(G
+			ames) {
+			// Define a sample game object
 			var sampleGame = new Games({
 				title: 'An Game about MEAN',
 				content: 'MEAN rocks!'
@@ -92,7 +93,7 @@
 			expect(scope.game).toEqualData(sampleGame);
 		}));
 
-		it('$scope.create() with valid form data should send a POST request with the form input values and then locate to new object URL', inject(function(Articles) {
+		it('$scope.create() with valid form data should send a POST request with the form input values and then locate to new object URL', inject(function(Games) {
 			// Create a sample article object
 			var sampleGamePostData = new Games({
 				title: 'An Game about MEAN',
@@ -111,7 +112,7 @@
 			scope.content = 'MEAN rocks!';
 
 			// Set POST response
-			$httpBackend.expectPOST('games', sampleGamePostData).respond(sampleArticleResponse);
+			$httpBackend.expectPOST('games', sampleGamePostData).respond(sampleGameResponse);
 
 			// Run controller functionality
 			scope.create();
@@ -121,7 +122,7 @@
 			expect(scope.title).toEqual('');
 			expect(scope.content).toEqual('');
 
-			// Test URL redirection after the article was created
+			// Test URL redirection after the Game was created
 			expect($location.path()).toBe('/games/' + sampleGameResponse._id);
 		}));
 
@@ -147,7 +148,7 @@
 			expect($location.path()).toBe('/games/' + sampleGamePutData._id);
 		}));
 
-		it('$scope.remove() should send a DELETE request with a valid gameId and remove the article from the scope', inject(function(Articles) {
+		it('$scope.remove() should send a DELETE request with a valid gameId and remove the game from the scope', inject(function(Games) {
 			// Create new article object
 			var sampleGame = new Games({
 				_id: '525a8422f6d0f87f0e407a33'

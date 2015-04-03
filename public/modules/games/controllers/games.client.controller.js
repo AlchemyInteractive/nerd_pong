@@ -5,12 +5,12 @@ angular.module('games').controller('GamesController', ['$scope', '$stateParams',
 		$scope.authentication = Authentication;
 
 		$scope.create = function() {
-			var article = new Articles({
+			var game = new Games({
 				title: this.title,
 				content: this.content
 			});
-			article.$save(function(response) {
-				$location.path('articles/' + response._id);
+			game.$save(function(response) {
+				$location.path('games/' + response._id);
 
 				$scope.title = '';
 				$scope.content = '';
@@ -19,39 +19,39 @@ angular.module('games').controller('GamesController', ['$scope', '$stateParams',
 			});
 		};
 
-		$scope.remove = function(article) {
-			if (article) {
-				article.$remove();
+		$scope.remove = function(game) {
+			if (game) {
+				game.$remove();
 
-				for (var i in $scope.articles) {
-					if ($scope.articles[i] === article) {
-						$scope.articles.splice(i, 1);
+				for (var i in $scope.games) {
+					if ($scope.games[i] === game) {
+						$scope.games.splice(i, 1);
 					}
 				}
 			} else {
-				$scope.article.$remove(function() {
-					$location.path('articles');
+				$scope.game.$remove(function() {
+					$location.path('games');
 				});
 			}
 		};
 
 		$scope.update = function() {
-			var article = $scope.article;
+			var game = $scope.game;
 
-			article.$update(function() {
-				$location.path('articles/' + article._id);
+			game.$update(function() {
+				$location.path('games/' + game._id);
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
 		};
 
 		$scope.find = function() {
-			$scope.articles = Articles.query();
+			$scope.games = Games.query();
 		};
 
 		$scope.findOne = function() {
-			$scope.article = Articles.get({
-				articleId: $stateParams.articleId
+			$scope.game = Games.get({
+				gameId: $stateParams.gameId
 			});
 		};
 	}
