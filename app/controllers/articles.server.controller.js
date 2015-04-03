@@ -5,102 +5,102 @@
  */
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors.server.controller'),
-	Article = mongoose.model('Article'),
+	Game = mongoose.model('Game'),
 	_ = require('lodash');
 
 /**
- * Create a article
+ * Create a game
  */
 exports.create = function(req, res) {
-	var article = new Article(req.body);
-	article.user = req.user;
+	var game = new Game(req.body);
+	game.user = req.user;
 
-	article.save(function(err) {
+	game.save(function(err) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.json(article);
+			res.json(game);
 		}
 	});
 };
 
 /**
- * Show the current article
+ * Show the current game
  */
 exports.read = function(req, res) {
-	res.json(req.article);
+	res.json(req.game);
 };
 
 /**
- * Update a article
+ * Update a game
  */
 exports.update = function(req, res) {
-	var article = req.article;
+	var game = req.game;
 
-	article = _.extend(article, req.body);
+	game = _.extend(game, req.body);
 
-	article.save(function(err) {
+	game.save(function(err) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.json(article);
+			res.json(game);
 		}
 	});
 };
 
 /**
- * Delete an article
+ * Delete an game
  */
 exports.delete = function(req, res) {
-	var article = req.article;
+	var game = req.game;
 
-	article.remove(function(err) {
+	game.remove(function(err) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.json(article);
+			res.json(game);
 		}
 	});
 };
 
 /**
- * List of Articles
+ * List of Game
  */
 exports.list = function(req, res) {
-	Article.find().sort('-created').populate('user', 'displayName').exec(function(err, articles) {
+	Game.find().sort('-created').populate('user', 'displayName').exec(function(err, games) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.json(articles);
+			res.json(games);
 		}
 	});
 };
 
 /**
- * Article middleware
+ * game middleware
  */
-exports.articleByID = function(req, res, next, id) {
-	Article.findById(id).populate('user', 'displayName').exec(function(err, article) {
+exports.gameByID = function(req, res, next, id) {
+	Game.findById(id).populate('user', 'displayName').exec(function(err, game) {
 		if (err) return next(err);
-		if (!article) return next(new Error('Failed to load article ' + id));
-		req.article = article;
+		if (!game) return next(new Error('Failed to load game ' + id));
+		req.game = game;
 		next();
 	});
 };
 
 /**
- * Article authorization middleware
+ * Game authorization middleware
  */
 exports.hasAuthorization = function(req, res, next) {
-	if (req.article.user.id !== req.user.id) {
+	if (req.game.user.id !== req.user.id) {
 		return res.status(403).send({
 			message: 'User is not authorized'
 		});
