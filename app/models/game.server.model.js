@@ -22,42 +22,7 @@ var GameSchema = new Schema({
 		required: 'Title cannot be blank'
 	},
 	bracket: {
-		type: Array,
-		default: ''
-		round: {
-			type: Mixed,
-			default: ''
-			match: {
-				type: Number,
-				default: ''
-				
-			},
-			user1: {
-				type: Number,
-				default: ''
-				
-			},
-			user2: {
-				type: Number,
-				default: ''
-				
-			},
-			score1: {
-				type: Number,
-				default: ''
-				 
-			},
-			score2: {
-				type: Number,
-				default: ''
-				 
-			},
-			winner: {
-				type: Number,
-				default: ''
-				
-			}
-		}
+		type: Array
 	}
 });
 
