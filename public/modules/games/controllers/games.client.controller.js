@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('games').controller('GamesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles',
-	function($scope, $stateParams, $location, Authentication, Articles) {
+angular.module('games').controller('GamesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Games',
+	function($scope, $stateParams, $location, Authentication, Games) {
 		$scope.authentication = Authentication;
 
 		$scope.create = function() {
