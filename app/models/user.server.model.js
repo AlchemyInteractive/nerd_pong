@@ -31,11 +31,6 @@ var UserSchema = new Schema({
 		default: '',
 		validate: [validateLocalStrategyProperty, 'Please fill in your first name']
 	},
-	password: {
-		type: String,
-		default: '',
-		validate: [validateLocalStrategyPassword, 'Password should be longer']
-	},
 	salt: {
 		type: String
 	},
