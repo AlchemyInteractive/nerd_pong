@@ -71,8 +71,7 @@
 			expect(scope.games).toEqualData(sampleGames);
 		}));
 
-		it('$scope.findOne() should create an array with one game object fetched from XHR using a gameId URL parameter', inject(function(G
-			ames) {
+		it('$scope.findOne() should create an array with one game object fetched from XHR using a gameId URL parameter', inject(function(Games) {
 			// Define a sample game object
 			var sampleGame = new Games({
 				title: 'An Game about MEAN',

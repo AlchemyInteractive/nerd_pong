@@ -5,7 +5,8 @@
  */
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema;
-
+	
+var Mixed = mongoose.Schema.Types.Mixed;
 /**
  * Game Schema
  */
@@ -20,14 +21,43 @@ var GameSchema = new Schema({
 		trim: true,
 		required: 'Title cannot be blank'
 	},
-	content: {
-		type: String,
-		default: '',
-		trim: true
-	},
-	user: {
-		type: Schema.ObjectId,
-		ref: 'User'
+	bracket: {
+		type: Array,
+		default: ''
+		round: {
+			type: Mixed,
+			default: ''
+			match: {
+				type: Number,
+				default: ''
+				
+			},
+			user1: {
+				type: Number,
+				default: ''
+				
+			},
+			user2: {
+				type: Number,
+				default: ''
+				
+			},
+			score1: {
+				type: Number,
+				default: ''
+				 
+			},
+			score2: {
+				type: Number,
+				default: ''
+				 
+			},
+			winner: {
+				type: Number,
+				default: ''
+				
+			}
+		}
 	}
 });
 
