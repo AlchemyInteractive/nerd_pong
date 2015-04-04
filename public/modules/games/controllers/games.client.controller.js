@@ -3,7 +3,7 @@
 angular.module('games').controller('GamesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Games',
 	function($scope, $stateParams, $location, Authentication, Games ) {
     
-	    $scope.config = {
+	    $scope.test = {
 	        bracket: [
 	          [
 	            {matchId: "m1", player1Score: 21, player2Score: 18, winner: "p1", player1Id: "p1", player2Id:"p2"},
@@ -84,11 +84,14 @@ angular.module('games').controller('GamesController', ['$scope', '$stateParams',
 				gameId: $stateParams.gameId
 			});
 			
-      		$scope.config.game = $scope.game;
+      		$scope.config = $scope.test;
 		};
 
 		$scope.initializeScroller = function() {
  		
+ 		console.log('initializeScroller');
+ 		if( $scope.config.bracket == undefined ) return;
+
 		  var $dom = $(document),
 		      $roundsWrapper = $('.rounds-wrapper'),
 		      ROUND_WIDTH = 280,
@@ -147,6 +150,7 @@ angular.module('games').controller('GamesController', ['$scope', '$stateParams',
 		};
 
 		$scope.refreshRounds = function() {
+
 			var $template = $('.template-player-box'),
 				$templateWinner = $('.template-player-winner'),
 				$rounds = $('.rounds-wrapper .round'),
@@ -158,7 +162,7 @@ angular.module('games').controller('GamesController', ['$scope', '$stateParams',
 			// 	if ( index == numRounds ) $($rounds[index]).addClass('active');
 			// 	else $($rounds[index]).removeClass('active');
 			// });
-			numRounds = $scope.config.bracket.length
+			numRounds = $scope.config.bracket.length;
 			for ( r=0; r<numRounds; r++ ) {
 				round = $scope.config.bracket[r];
 				$roundElem = $($rounds[r]);
@@ -225,8 +229,6 @@ angular.module('games').controller('GamesController', ['$scope', '$stateParams',
 		}
 
 	}
-
-
 ]);
 
 
