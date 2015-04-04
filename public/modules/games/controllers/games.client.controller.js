@@ -26,7 +26,7 @@ angular.module('games').controller('GamesController', ['$scope', '$stateParams',
         users: [
       
         ]
-      }      
+      };      
     };
 
 		$scope.authentication = Authentication;
@@ -70,6 +70,29 @@ angular.module('games').controller('GamesController', ['$scope', '$stateParams',
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
+		};
+		// check if player in the game
+		$scope.checkPlayerInGame = function(userId, gameId) {
+			var game = $scope.games;
+			// console.log($scope.games);
+
+
+			
+					
+				console.log(game);
+				// if(userId == value) && (game_id ==  {
+				// 	console.log('equal');
+				// 	// console.log(value.users);
+				// } else {
+				// 	console.log('else');
+				// 	// console.log(key);
+				// };
+				
+				// console.log(userId);
+		
+
+		
+
 		};
 
 		$scope.find = function() {

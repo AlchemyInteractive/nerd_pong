@@ -23,6 +23,9 @@ var GameSchema = new Schema({
 	},
 	bracket: {
 		type: Array
+	},
+	users: {
+		type: Array
 	}
 });
 
