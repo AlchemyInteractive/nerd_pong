@@ -1,23 +1,71 @@
-<section data-ng-controller="GamesController" data-ng-init="findOne()">
-	<div class="page-header">
-		<h1 data-ng-bind="game.title"></h1>
-	</div>
-  {{configure}}
-	<div class="pull-right" data-ng-show="authentication.user._id == game.user._id">
-		<a class="btn btn-primary" href="/#!/games/{{game._id}}/edit">
-			<i class="glyphicon glyphicon-edit"></i>
-		</a>
-		<a class="btn btn-primary" data-ng-click="remove();">
-			<i class="glyphicon glyphicon-trash"></i>
-		</a>
-	</div>
-	<small>
-		<em class="text-muted">
-			Posted on
-			<span data-ng-bind="game.created | date:'mediumDate'"></span>
-			by
-			<span data-ng-bind="game.user.displayName"></span>
-		</em>
-	</small>
-	<p class="lead" data-ng-bind="game.content"></p>
+<section data-ng-controller="GamesController" data-ng-init="findOne();initializeScroller();refreshRounds();">
+
+{{game.bracket}}
+{{users}}
+
+<br/>
+<!-- {{game.bracket}} -->
+
+
+<div role="main" class="brackets main">
+
+  <div class="rounds-wrapper">
+
+    <div class="round first-round">
+      <h3>1st Round</h3>
+      <div class="matches-wrapper">
+      </div>
+    </div>
+   
+    <div class="round second-round">
+      <h3>2nd Round</h3>
+      <div class="matches-wrapper">
+      </div>
+    </div>
+
+
+    <div class="round final-round">
+      <h3>Final Round</h3>
+      <div class="matches-wrapper">
+      </div>
+    </div>
+
+
+    <div class="round champion">
+      <h3>Champion</h3>
+      <div class="matches-wrapper">
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="template-player-box" style="display:none;">
+      <div class="player-box">
+        <ul>
+          <li class="player-1">
+            <img class="profile-pic" src=""/>
+            <p></p>
+          </li>
+          <li class="vs"></li>
+          <li class="player-2">
+            <img class="profile-pic" src=""/>
+            <p></p>
+          </li>
+        </ul>
+      </div>
+</div>
+
+
+<div class="template-player-winner" style="display:none;">
+      <div class="player-box">
+      	<ul>
+          <li class="winner">
+        	<img class="profile-pic" src=""/>
+        	<p></p>
+       	  </li>
+       	</ul>
+      </div>
+</div>
+
 </section>
