@@ -1,9 +1,11 @@
-<section data-ng-controller="GamesController" data-ng-init="initializeScroller()">
+<section data-ng-controller="GamesController" data-ng-init="findOne();initializeScroller();refreshRounds();">
+
+{{config}}
 
 
 <div role="main" class="brackets main">
 
-  <div class="rounds-wrapper" data-ng-init="refreshRounds()">
+  <div class="rounds-wrapper">
 
     <div class="round first-round">
       <h3>1st Round</h3>
@@ -38,12 +40,12 @@
       <div class="player-box">
         <ul>
           <li class="player-1">
-            <img class="profile-pic" src="http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png"/>
+            <img class="profile-pic" src=""/>
             <p></p>
           </li>
-          <li class="vs">Table X</li>
+          <li class="vs"></li>
           <li class="player-2">
-            <img class="profile-pic" src="http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png"/>
+            <img class="profile-pic" src=""/>
             <p></p>
           </li>
         </ul>
@@ -55,20 +57,11 @@
       <div class="player-box">
       	<ul>
           <li class="winner">
-        	<img class="profile-pic" src="http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png"/>
+        	<img class="profile-pic" src=""/>
         	<p></p>
        	  </li>
        	</ul>
       </div>
 </div>
 
-<!-- 	<small>
-		<em class="text-muted">
-			Posted on
-			<span data-ng-bind="game.created | date:'mediumDate'"></span>
-			by
-			<span data-ng-bind="game.user.displayName"></span>
-		</em>
-	</small>
-	<p class="lead" data-ng-bind="game.content"></p> -->
 </section>

@@ -83,10 +83,12 @@ angular.module('games').controller('GamesController', ['$scope', '$stateParams',
 			$scope.game = Games.get({
 				gameId: $stateParams.gameId
 			});
+			
+      		$scope.config.game = $scope.game;
 		};
 
 		$scope.initializeScroller = function() {
- 
+ 		
 		  var $dom = $(document),
 		      $roundsWrapper = $('.rounds-wrapper'),
 		      ROUND_WIDTH = 280,
@@ -205,16 +207,11 @@ angular.module('games').controller('GamesController', ['$scope', '$stateParams',
 				$roundElem = $($rounds[3]);
 				$matchElem = $templateWinner.contents().clone();
 				user1 = getUserById(match.winner);
-				console.log("winner", match, match.winner)
 				$matchesWrapper = $roundElem.find('.matches-wrapper');
 				$matchElem.find('.winner img').attr('src', user1.img);
 				$matchElem.find('.winner p').text(user1.name);
 				$matchesWrapper.append( $matchElem );
 				$matchElem.css('height', '350px').css('padding-top', '150px');
-
-				// numMatches = round.length;
-				// for ( m=0; m<numMatches; m++ ) {
-				// }
 			}
 
 
@@ -226,7 +223,10 @@ angular.module('games').controller('GamesController', ['$scope', '$stateParams',
 					return $scope.config.users[i];
 			return null;
 		}
+
 	}
+
+
 ]);
 
 
