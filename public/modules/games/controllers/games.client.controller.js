@@ -79,27 +79,29 @@ angular.module('games').controller('GamesController', ['$scope', '$stateParams',
 			});
 		};
 		// check if player in the game
-		$scope.checkPlayerInGame = function(userId, gameId) {
-			var game = $scope.games;
-			// console.log($scope.games);
-
-
+		$scope.checkPlayerInGame = function(userId, gameId, game) {
 			
+			var strNum = userId.toString();
+			var userArray = game.users;
+			var locateUser = userArray.indexOf(strNum);
+			// if locateUser returns -1 then add to game
+				if (locateUser >= 0) {
+					alert("You're already in the game.");
+				} else {
+					// loop through games to see if winner exists
+					for(i=0; i<game.bracket.length; i++) {
+						if (game.bracket[i].winner == null) {
+							// push into match
+							alert('go for it');
+						
+				 		} else {
+							alert('Game is closed.');
+						};
+					};
 					
-				console.log(game);
-				// if(userId == value) && (game_id ==  {
-				// 	console.log('equal');
-				// 	// console.log(value.users);
-				// } else {
-				// 	console.log('else');
-				// 	// console.log(key);
-				// };
-				
-				// console.log(userId);
-		
-
-		
-
+				};
+			
+	
 		};
 
 		$scope.find = function() {
