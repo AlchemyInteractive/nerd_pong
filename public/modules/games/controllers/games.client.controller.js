@@ -87,8 +87,6 @@ angular.module('games').controller('GamesController', ['$scope', '$stateParams',
 			$scope.game = Games.get({
 				gameId: $stateParams.gameId
 			});
-      self.configure = {};
-      self.configure.bracket = $scope.game;
 		};
   
 	}
