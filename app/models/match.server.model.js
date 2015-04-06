@@ -14,11 +14,11 @@ var MatchSchema = new Schema({
 		type: Date,
 		default: Date.now
 	},
-	user1: {
-		type: Number,
+	player1Id: {
+		type: String,
 	},
-	user2: {
-		type: Number,
+	player2Id: {
+		type: String,
 	},
 	score1: {
 		type: Number,
