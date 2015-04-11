@@ -1,5 +1,5 @@
 body#background {
-	background: url(beerpongbg.jpg) no-repeat 50% 50% fixed;
+	background: url(pingpangbg.jpg) no-repeat 50% 50% fixed;
 	background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -34,12 +34,12 @@ header {
 span.nerd {
 		font-family: 'Open Sans', sans-serif;
 		font-weight: 600;
-		font-size: 2em;
+		font-size: 3.2em;
 	}
 	.pong {
 		font-family: 'Open Sans', sans-serif;
 		font-weight: 300;
-		font-size: 2em;
+		font-size: 3.2em;
 	}
 
 // Container for mainpage
@@ -65,6 +65,38 @@ span.nerd {
 	text-align: center;
 	z-index: -1;
 
+}
+.container {
+	text-align: center;
+	top: 45%;
+	position: absolute;
+
+}
+.text {
+	width: 70%;
+	margin: 15px auto 70px auto;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 100;
+	a {
+		color: #fff;
+	}
+	a:hover {
+		color: red;
+	}
+}
+.button-center {
+  text-align: center;
+  font-weight: 100;
+  font-size: 1.1em;
+  letter-spacing: 3px;
+  text-decoration: none;
+  font-family: 'Open Sans', sans-serif;
+  border: 1px solid #fff;
+  color: #fff;
+  padding: 20px 40px;
+  margin-top: 10px;
+  line-height: 60px;
+  transition: background 0.3s;
 }
 @media (max-width: 768px) {
 	.header-text {

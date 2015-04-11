@@ -21,7 +21,7 @@
 <div class="bg">
 <header role="banner">
 	<div class="container">
-		<nav role="navigation">
+		<!-- <nav role="navigation">
 	
 			<div class="hamburger">
 				<div></div>
@@ -33,20 +33,20 @@
 			  <button>Menu</button>
 
 			  <div class="hamburger-menu">
-			  	<%=link_to 'Home', root_path %>
-			  	<%=link_to 'Bracket', brackets_path %>
-			  	<% if current_user %>
-				    <%=link_to 'Settings', edit_user_path(current_user.id) %>
-			    <% else %>
-				    <%=link_to 'Log In with Twitter', '/auth/twitter' %>
-			    <% end %>
+			  	<%#=link_to 'Home', root_path %>
+			  	<%#=link_to 'Bracket', brackets_path %>
+			  	<%# if current_user %>
+				    <%#=link_to 'Settings', edit_user_path(current_user.id) %>
+			    <%# else %>
+				    <%#=link_to 'Log In with Twitter', '/auth/twitter' %>
+			    <%# end %>
 			  </div>
 			</nav>
 		
 			<div class="header-text">
 				<span class="nerd">nerd</span><span class="pong">pong</span>
 			</div>
-		</nav>
+		</nav> -->
 	</div>
 </header>
 <%= yield %>
