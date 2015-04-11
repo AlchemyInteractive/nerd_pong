@@ -68,15 +68,15 @@ span.nerd {
 }
 .container {
 	text-align: center;
-	top: 45%;
-	position: absolute;
+	margin-top: 10%;
 
 }
 .text {
-	width: 70%;
+	width: 50%;
 	margin: 15px auto 70px auto;
 	font-family: 'Open Sans', sans-serif;
 	font-weight: 100;
+	font-size: 12px;
 	a {
 		color: #fff;
 	}
@@ -87,8 +87,8 @@ span.nerd {
 .button-center {
   text-align: center;
   font-weight: 100;
-  font-size: 1.1em;
-  letter-spacing: 3px;
+  font-size: 12px;
+  letter-spacing: 2px;
   text-decoration: none;
   font-family: 'Open Sans', sans-serif;
   border: 1px solid #fff;
