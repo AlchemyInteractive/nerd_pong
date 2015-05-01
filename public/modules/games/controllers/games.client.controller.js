@@ -3,7 +3,7 @@
 angular.module('games').controller('GamesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Games',
 	function($scope, $stateParams, $location, Authentication, Games ) {
     
-     $scope.config = function(){
+     $scope.configure = function(){
      return {
        bracket: [
          [
@@ -79,26 +79,20 @@ angular.module('games').controller('GamesController', ['$scope', '$stateParams',
 			});
 		};
 		// check if player in the game
-		$scope.checkPlayerInGame = function(userId, gameId, game) {
-			
-			var strNum = userId.toString();
-			var userArray = game.users;
+		$scope.checkPlayerInGame = function(user, gameId, game) {
+
+			var strNum = user._id.toString();
+			var userArray = game.users.map(function(obj){return obj._id});
 			var locateUser = userArray.indexOf(strNum);
+
 			// if locateUser returns -1 then add to game
 				if (locateUser >= 0) {
 					alert("You're already in the game.");
 				} else {
-					// loop through games to see if winner exists
-					for(i=0; i<game.bracket.length; i++) {
-						if (game.bracket[i].winner == null) {
-							// push into match
-							alert('go for it');
-						
-				 		} else {
-							alert('Game is closed.');
-						};
-					};
-					
+          // add user to user bracket
+				  game.users.push(strNum);	
+          game.$save();
+          console.log(game.users);
 				};
 			
 	
@@ -112,12 +106,22 @@ angular.module('games').controller('GamesController', ['$scope', '$stateParams',
 			$scope.game = Games.get({
 				gameId: $stateParams.gameId
 			});
-			
-      		$scope.config = $scope.test;
+      return $scope.game;
 		};
-
+    
+    $scope.initGame = function(){
+	    $scope.game = Games.get({
+			  gameId: $stateParams.gameId
+			}).$promise.then(function(data){
+        $scope.config = data;
+        $scope.initializeScroller();
+        $scope.refreshRounds();
+      });
+    };
+    
 		$scope.initializeScroller = function() {
  		
+    console.log($scope.config);
  		console.log('initializeScroller');
  		if( $scope.config.bracket == undefined ) return;
 
@@ -177,7 +181,7 @@ angular.module('games').controller('GamesController', ['$scope', '$stateParams',
 		      $roundsWrapper.animate({'margin-left':'0px'}, 300, function() { isAnimating = false; });
 		  } 
 		};
-
+    
 		$scope.refreshRounds = function() {
 
 			var $template = $('.template-player-box'),
@@ -258,10 +262,3 @@ angular.module('games').controller('GamesController', ['$scope', '$stateParams',
 
 	}
 ]);
-
-
-
-		
-
-
-
