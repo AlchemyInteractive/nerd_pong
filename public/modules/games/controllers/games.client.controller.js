@@ -82,20 +82,24 @@ angular.module('games').controller('GamesController', ['$scope', '$stateParams',
 		$scope.checkPlayerInGame = function(user, gameId, game) {
 
 			var strNum = user._id.toString();
-			var userArray = game.users.map(function(obj){return obj._id});
+			var userArray = game.users.map(function(obj){return obj.userId});
 			var locateUser = userArray.indexOf(strNum);
 
 			// if locateUser returns -1 then add to game
-				if (locateUser >= 0) {
-					alert("You're already in the game.");
-				} else {
-          // add user to user bracket
-				  game.users.push(strNum);	
-          game.$save();
-          console.log(game.users);
-				};
-			
-	
+		  if (locateUser >= 0) {
+			  alert("You're already in the game.");
+			} else {
+        // add user to user bracket
+				game.users.push(
+          {
+            userId: user._id, 
+            name: user.providerData.name, 
+            img: user.providerData.profile_image_url
+          }
+        );	
+        game.$update();
+        console.log(game.users);
+		  };
 		};
 
 		$scope.find = function() {
