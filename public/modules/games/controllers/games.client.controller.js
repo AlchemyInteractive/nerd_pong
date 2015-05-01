@@ -6,28 +6,28 @@ angular.module('games').controller('GamesController', ['$scope', '$stateParams',
 	    $scope.test = {
 	        bracket: [
 	          [
-	            {matchId: "m1", player1Score: 21, player2Score: 18, winner: "p1", player1Id: "p1", player2Id:"p2"},
-	            {matchId: "m2", player1Score: 19, player2Score: 21, winner: "p4", player1Id: "p3", player2Id:"p4"},
-	            {matchId: "m3", player1Score: 17, player2Score: 21, winner: "p6", player1Id: "p5", player2Id:"p6"},
-	            {matchId: "m4", player1Score: 21, player2Score: 18, winner: "p7", player1Id: "p7", player2Id:"p8"},
+	            {matchId: 'm1', player1Score: 21, player2Score: 18, winner: 'p1', player1Id: 'p1', player2Id:'p2'},
+	            {matchId: 'm2', player1Score: 19, player2Score: 21, winner: 'p4', player1Id: 'p3', player2Id:'p4'},
+	            {matchId: 'm3', player1Score: 17, player2Score: 21, winner: 'p6', player1Id: 'p5', player2Id:'p6'},
+	            {matchId: 'm4', player1Score: 21, player2Score: 18, winner: 'p7', player1Id: 'p7', player2Id:'p8'},
 	          ],
 	          [
-	            {matchId: "m5", player1Score: 21, player2Score: 18, winner: "p1", player1Id: "p1", player2Id:"p4"},
-	            {matchId: "m6", player1Score: 19, player2Score: 21, winner: "p7", player1Id: "p6", player2Id:"p7"},
+	            {matchId: 'm5', player1Score: 21, player2Score: 18, winner: 'p1', player1Id: 'p1', player2Id:'p4'},
+	            {matchId: 'm6', player1Score: 19, player2Score: 21, winner: 'p7', player1Id: 'p6', player2Id:'p7'},
 	          ],
 	          [
-	            {matchId: "m8", player1Score: 19, player2Score: 21, winner: "p7", player1Id: "p1", player2Id:"p7"},
+	            {matchId: 'm8', player1Score: 19, player2Score: 21, winner: 'p7', player1Id: 'p1', player2Id:'p7'},
 	          ]
 	        ],
 	        users: [
-	      		{ userId: "p1", name: "p1", img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
-	      		{ userId: "p2", name: "p2", img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
-	      		{ userId: "p3", name: "p3", img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
-	      		{ userId: "p4", name: "p4", img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
-	      		{ userId: "p5", name: "p5", img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
-	      		{ userId: "p6", name: "p6", img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
-	      		{ userId: "p7", name: "p7", img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
-	      		{ userId: "p8", name: "p8", img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'}
+	      		{ userId: 'p1', name: 'p1', img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
+	      		{ userId: 'p2', name: 'p2', img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
+	      		{ userId: 'p3', name: 'p3', img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
+	      		{ userId: 'p4', name: 'p4', img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
+	      		{ userId: 'p5', name: 'p5', img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
+	      		{ userId: 'p6', name: 'p6', img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
+	      		{ userId: 'p7', name: 'p7', img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
+	      		{ userId: 'p8', name: 'p8', img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'}
 	      	]
 	    };      
 	    
@@ -83,15 +83,12 @@ angular.module('games').controller('GamesController', ['$scope', '$stateParams',
 			$scope.game = Games.get({
 				gameId: $stateParams.gameId
 			});
-			
+
       		$scope.config = $scope.test;
+      		// $scope.config = $scope.game.bracket;
 		};
 
-		$scope.initializeScroller = function() {
- 		
- 		console.log('initializeScroller');
- 		if( $scope.config.bracket == undefined ) return;
-
+		$scope.initializeScroller = function(document) {
 		  var $dom = $(document),
 		      $roundsWrapper = $('.rounds-wrapper'),
 		      ROUND_WIDTH = 280,
@@ -151,6 +148,8 @@ angular.module('games').controller('GamesController', ['$scope', '$stateParams',
 
 		$scope.refreshRounds = function() {
 
+ 			if( $scope.config === undefined ) return console.warn('something seems wrong here...');
+ 		
 			var $template = $('.template-player-box'),
 				$templateWinner = $('.template-player-winner'),
 				$rounds = $('.rounds-wrapper .round'),
@@ -178,11 +177,11 @@ angular.module('games').controller('GamesController', ['$scope', '$stateParams',
 					user1 = getUserById(match.player1Id);
 					user2 = getUserById(match.player2Id);
 					/** make the logic dynamic to handle deeper brackets **/
-					if ( r == 0)
+					if ( r === 0)
 						$matchElem.css('height', '80px').css('padding-top', '10px');
-					else if ( r == 1)
+					else if ( r === 1)
 						$matchElem.css('height', '170px').css('padding-top', '60px');
-					else if ( r == 2)
+					else if ( r === 2)
 						$matchElem.css('height', '350px').css('padding-top', '150px');
 					
 					
@@ -195,7 +194,7 @@ angular.module('games').controller('GamesController', ['$scope', '$stateParams',
 					$matchesWrapper.append( $matchElem );
 					
 
-					if ( match.winner != "" ) count++;
+					if ( match.winner !== '' ) count++;
 
 				}
 				// if ( count == numMatches) $roundElem.addClass('active');
@@ -205,7 +204,7 @@ angular.module('games').controller('GamesController', ['$scope', '$stateParams',
 			}  
 
 			// check if we have a winner
-			if ( numRounds > 2 && $scope.config.bracket[2] != '' ) {
+			if ( numRounds > 2 && $scope.config.bracket[2] !== '' ) {
 				match = $scope.config.bracket[2][0];
 				if ( !match )return;
 				$roundElem = $($rounds[3]);
@@ -222,12 +221,18 @@ angular.module('games').controller('GamesController', ['$scope', '$stateParams',
 		};
 		
 		function getUserById(id){
+			if ( $scope.config.users === undefined ) return null;
+
 			for ( var i=0, l=$scope.config.users.length; i<l; i++ ) 
-				if ( id == $scope.config.users[i].userId ) 
+				if ( id === $scope.config.users[i].userId ) 
 					return $scope.config.users[i];
 			return null;
 		}
 
+		$(function(){
+			$scope.initializeScroller(document);
+			$scope.refreshRounds();
+		});
 	}
 ]);
 
