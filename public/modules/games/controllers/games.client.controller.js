@@ -3,6 +3,7 @@
 angular.module('games').controller('GamesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Games',
 	function($scope, $stateParams, $location, Authentication, Games ) {
     
+<<<<<<< HEAD
 	    $scope.test = {
 	        bracket: [
 	          [
@@ -31,6 +32,9 @@ angular.module('games').controller('GamesController', ['$scope', '$stateParams',
 	      	]
 	    };      
 	    
+
+    $scope.users = [];
+
 		$scope.authentication = Authentication;
 
 		$scope.create = function() {
@@ -73,6 +77,31 @@ angular.module('games').controller('GamesController', ['$scope', '$stateParams',
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
+		};
+		// check if player in the game
+		$scope.checkPlayerInGame = function(userId, gameId, game) {
+			
+			var strNum = userId.toString();
+			var userArray = game.users;
+			var locateUser = userArray.indexOf(strNum);
+			// if locateUser returns -1 then add to game
+				if (locateUser >= 0) {
+					alert("You're already in the game.");
+				} else {
+					// loop through games to see if winner exists
+					for(i=0; i<game.bracket.length; i++) {
+						if (game.bracket[i].winner == null) {
+							// push into match
+							alert('go for it');
+						
+				 		} else {
+							alert('Game is closed.');
+						};
+					};
+					
+				};
+			
+	
 		};
 
 		$scope.find = function() {
