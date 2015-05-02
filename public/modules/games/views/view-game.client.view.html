@@ -1,6 +1,6 @@
 <section data-ng-controller="GamesController" data-ng-init="initGame();">
 
-config: {{config}}
+<!-- config: {{config}} -->
 
 <br/>
 
@@ -38,7 +38,6 @@ config: {{config}}
   </div>
 </div>
 
-
 <div class="template-player-box" style="display:none;">
       <div class="player-box">
         <ul>
@@ -55,6 +54,36 @@ config: {{config}}
       </div>
 </div>
 
+<div id="backdrop" style="display:none;"></div>
+
+<div id="modal-match-score" class="player-box" style="display:none;">
+  <h3 class="title"></h3>
+  <ul class='player'>
+    <li class="player-1">
+      <img class="profile-pic" src=""/>
+      <p></p>
+    </li>
+    <li class="vs">vs</li>
+    <li class="player-2">
+      <img class="profile-pic" src=""/>
+      <p></p>
+    </li>
+  </ul>
+  <p>FINAL SCORE</p>
+  <form id="form-save-score">
+    <ul class='scores'>
+      <li class="score-1">
+        <input type="text" maxlength="2" name="score-1">
+
+      </li>
+      <li class="to">to</li>
+      <li class="score-2">
+        <input type="text" maxlength="2" name="score-2">
+      </li>
+    </ul>
+    <input type="submit" value="Save Score">
+  </form>
+</div>
 
 <div class="template-player-winner" style="display:none;">
       <div class="player-box">
