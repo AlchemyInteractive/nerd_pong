@@ -25,6 +25,9 @@ var MatchSchema = new Schema({
 	},
 	score2: {
 		type: Number,
+	},
+	winner: {
+		type: Number
 	}
 });
 

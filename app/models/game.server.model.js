@@ -21,6 +21,10 @@ var GameSchema = new Schema({
 		trim: true,
 		required: 'Title cannot be blank'
 	},
+  started: {
+		type: Boolean,
+		default: false,
+  },
 	bracket: {
 		type: Array
 	},

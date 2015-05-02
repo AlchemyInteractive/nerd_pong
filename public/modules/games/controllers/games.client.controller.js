@@ -3,8 +3,7 @@
 angular.module('games').controller('GamesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Games',
 	function($scope, $stateParams, $location, Authentication, Games ) {
     
-     $scope.configure = function(){
-     return {
+     $scope.configure = {
        bracket: [
          [
            {matchId: "m1", player1Score: 21, player2Score: 18, winner: "p1", player1Id: "p1", player2Id:"p2"},
@@ -30,7 +29,6 @@ angular.module('games').controller('GamesController', ['$scope', '$stateParams',
       { userId: "p7", name: "p7", img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
       { userId: "p8", name: "p8", img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'}
       ]
-     }      
    };
 
     $scope.users = [];
@@ -78,6 +76,24 @@ angular.module('games').controller('GamesController', ['$scope', '$stateParams',
 				$scope.error = errorResponse.data.message;
 			});
 		};
+
+    $scope.createBracket = function(){
+      console.log($scope.config);
+      if ($scope.config.users.length > 1){
+        $scope.config.users = $scope.shuffle($scope.config.users);
+        $scope.createMatches($scope.config.users);
+        //$scope.config.started = true;
+        $scope.config.$update();
+        $scope.initializeScroller();
+        $scope.refreshRounds();
+      } else {
+      }
+    };
+
+    $scope.createMatches = function(array){
+      console.log('here :' + array);  
+    };
+
 		// check if player in the game
 		$scope.checkPlayerInGame = function(user, gameId, game) {
 
@@ -86,10 +102,7 @@ angular.module('games').controller('GamesController', ['$scope', '$stateParams',
 			var locateUser = userArray.indexOf(strNum);
 
 			// if locateUser returns -1 then add to game
-		  if (locateUser >= 0) {
-			  alert("You're already in the game.");
-			} else {
-        // add user to user bracket
+		  if (locateUser < 0) {
 				game.users.push(
           {
             userId: user._id, 
@@ -99,6 +112,8 @@ angular.module('games').controller('GamesController', ['$scope', '$stateParams',
         );	
         game.$update();
         console.log(game.users);
+			} else {
+        // add user to user bracket
 		  };
 		};
 
@@ -118,8 +133,10 @@ angular.module('games').controller('GamesController', ['$scope', '$stateParams',
 			  gameId: $stateParams.gameId
 			}).$promise.then(function(data){
         $scope.config = data;
-        $scope.initializeScroller();
-        $scope.refreshRounds();
+        if ($scope.config.started){
+          $scope.initializeScroller();
+          $scope.refreshRounds();
+        }
       });
     };
     
@@ -264,5 +281,22 @@ angular.module('games').controller('GamesController', ['$scope', '$stateParams',
 			return null;
 		}
 
-	}
-]);
+  $scope.shuffle = function(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex ;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+  }
+}]);
