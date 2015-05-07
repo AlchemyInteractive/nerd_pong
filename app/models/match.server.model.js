@@ -14,6 +14,9 @@ var MatchSchema = new Schema({
 		type: Date,
 		default: Date.now
 	},
+	gameId: {
+		type: Number,
+	},
 	player1Id: {
 		type: String,
 	},

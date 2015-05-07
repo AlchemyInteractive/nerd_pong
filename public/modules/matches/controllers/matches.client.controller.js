@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('matches').controller('MatchesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Matches', function( $scope, $stateParams, $location, Authencitcation, Matches ) { 
+angular.module('matches').controller('MatchesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Matches', function( $scope, $stateParams, $location, Authentication, Matches ) { 
 
   
 		$scope.create = function() {

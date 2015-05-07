@@ -1,13 +1,19 @@
 'use strict';
 
+/**
+ * Module dependencies.
+ */
+var users = require('../../app/controllers/users.server.controller'),
+	matches = require('../../app/controllers/matches.server.controller');
+
 module.exports = function(app) {
   // Match Routes
 	app.route('/matches')
 		.get(matches.list)
 		.post(users.requiresLogin, matches.create);
 
-	app.route('/matches/:gameId')
-		.get(matchces.read)
+	app.route('/matches/:matchId')
+		.get(matches.read)
 		.put(users.requiresLogin, matches.update)
 		.delete(users.requiresLogin, matches.delete);
 

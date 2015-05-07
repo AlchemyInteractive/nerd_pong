@@ -1,7 +1,10 @@
 'use strict';
 
-angular.module('games').controller('GamesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Games',
-    function($scope, $stateParams, $location, Authentication, Games ) {
+angular.module('games').controller('GamesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Games', 'Matches',
+    function($scope, $stateParams, $location, Authentication, Games, Matches) {
+        
+        $scope.score1;
+        $scope.score2;
 
         $scope.configure = {
             bracket: [
@@ -78,20 +81,53 @@ angular.module('games').controller('GamesController', ['$scope', '$stateParams',
         };
 
     $scope.createBracket = function(){
-      console.log($scope.config);
+      console.log($scope.config.users);
       if ($scope.config.users.length > 1){
         $scope.config.users = $scope.shuffle($scope.config.users);
-        $scope.createMatches($scope.config.users);
+        $scope.createMatches();
         //$scope.config.started = true;
         $scope.config.$update();
-        $scope.initializeScroller();
+        $scope.initializeUI();
         $scope.refreshRounds();
       } else {
       }
     };
 
-    $scope.createMatches = function(array){
-      console.log('here :' + array);  
+    $scope.createMatches = function(){
+      $scope.saveMatchToConfig();
+      $scope.createEachMatch();
+      console.log($scope.config.bracket);  
+    };
+  
+    $scope.saveMatchToConfig = function(){
+      $scope.config.bracket.push( [] );  
+      for ( var i=0; i<Math.ceil( $scope.config.users.length/2 ); i++ ){
+        var match = new Matches({
+          player1Score:"",
+          player2Score:"",
+          winner:"",
+          player1Id:"",
+          player2Id:""
+        });
+        $scope.config.bracket[0].push( match );  
+        match.$save();
+      }
+      $scope.config.$update();
+    };
+
+    $scope.createEachMatch = function(){
+      var tempArray = $scope.config.users.map(function(obj){return obj});
+      for ( var i=0; i<$scope.config.bracket.length; i++ ){
+        if ( $scope.config.bracket[0][i].player1Id == "" ){
+          var lastUser = tempArray.pop();
+          $scope.config.bracket[0][i].player1Id = lastUser.userId;
+          console.log('first: ' + lastUser.userId);
+        } else if ( $scope.config.bracket[0][i].player2Id == "" ){
+          var lastUser = tempArray.pop();
+          $scope.config.bracket[0][i].player2Id = lastUser.userId;
+          console.log('second: ' + lastUser.userId);
+        }
+      }
     };
 
         // check if player in the game
@@ -117,9 +153,9 @@ angular.module('games').controller('GamesController', ['$scope', '$stateParams',
           };
         };
 
-$scope.find = function() {
-    $scope.games = Games.query();
-};
+    $scope.find = function() {
+      $scope.games = Games.query();
+    };
 
         $scope.findOne = function() {
             $scope.game = Games.get({
@@ -129,28 +165,16 @@ $scope.find = function() {
         };
     
     $scope.initGame = function(){
-        $scope.game = Games.get({
-              gameId: $stateParams.gameId
-            }).$promise.then(function(data){
+      $scope.game = Games.get({
+        gameId: $stateParams.gameId
+      }).$promise.then(function(data){
         $scope.config = data;
-        if ($scope.config.started){
-          $scope.initializeScroller();
+        if (!$scope.config){
+          $scope.initializeUI();
           $scope.refreshRounds();
         }
       });
     };
-    
-$scope.initGame = function(){
-    $scope.game = Games.get({
-        gameId: $stateParams.gameId
-    }).$promise.then(function(data){
-
-        $scope.config = $scope.configure;
-        $scope.initializeUI();
-        $scope.refreshRounds();
-
-    });
-};
 
 $scope.initializeUI = function() {
 
@@ -200,41 +224,25 @@ $scope.initializeUI = function() {
             startSwipeX = currentSwipeX = 0;
         });
 
-  $scope.shuffle = function(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex ;
-
-    // While there remain elements to shuffle...
-    while (0 !== currentIndex) {
-
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-
-      // And swap it with the current element.
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
-    }
-
-    return array;
-  }
         $(document).on('mouseup touchstop touchend', '.player-box', {}, function(event){
             var $box = $(event.currentTarget);
             if ( $box.data('round') && $box.data('match') )
                 openScoreModal($box.data('round'), $box.data('match'));
         });
+
         $backdrop.on('mouseup touchstop touchend', function(){
             $backdrop.fadeTo("slow" , 0,  function() { $backdrop.hide(); });
             $modalScore.fadeOut('fast',  function() { $modalScore.hide(); });
         });
 
-        $saveScoreForm.on('submit', function(){
+        $scope.saveScore = function(){
             alert('TO DO! ' + $modalScore.data('round') + ' match: ' + $modalScore.data('match'));
             if ( $modalScore.data('round') && $modalScore.data('match') ) {
                 // you have all the info to be able to save to 
-//              $scope.config.bracket[round][match];
-            }           
-        });
+                // $scope.config.bracket[round][match];
+                console.log('p1: ' + $scope.score1 + ', p2: ' + $scope.score2); 
+            }        
+        };
         
         function openScoreModal(round, match){
             console.log('opening modal ~ round index:', round, ' ~ match index:', match);
@@ -369,6 +377,24 @@ $scope.initializeUI = function() {
                         return $scope.config.users[i];
                     return null;
                 }
+  $scope.shuffle = function(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex ;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+  }
 
             }
         ]

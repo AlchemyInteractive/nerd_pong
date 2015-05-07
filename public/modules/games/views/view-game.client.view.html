@@ -73,15 +73,15 @@
   <form id="form-save-score">
     <ul class='scores'>
       <li class="score-1">
-        <input type="text" maxlength="2" name="score-1">
+        <input type="text" maxlength="2" name="score-1" ng-model="score1">
 
       </li>
       <li class="to">to</li>
       <li class="score-2">
-        <input type="text" maxlength="2" name="score-2">
+        <input type="text" maxlength="2" name="score-2" ng-model="score2">
       </li>
     </ul>
-    <input type="submit" value="Save Score">
+    <input type="submit" value="Save Score" ng-click="saveScore()">
   </form>
 </div>
 

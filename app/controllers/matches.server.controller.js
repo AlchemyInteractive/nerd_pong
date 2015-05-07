@@ -82,3 +82,15 @@ exports.list = function(req, res) {
 		}
 	});
 };
+
+/**
+ * match middleware
+ */
+exports.matchByID = function(req, res, next, id) {
+  Match.findById(id).populate('user', 'displayName').exec(function(err, game) {
+		if (err) return next(err);
+		if (!game) return next(new Error('Failed to load match ' + id));
+		req.game = game;
+		next();
+	});
+};
