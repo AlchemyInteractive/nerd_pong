@@ -2,6 +2,20 @@
 
 angular.module('games').controller('GamesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Games', 'Matches',
     function($scope, $stateParams, $location, Authentication, Games, Matches) {
+
+				// general-purpose fns
+				var getUserById = function(arr, id) {
+					return R.find(R.propEq('userId', id), arr)
+				}
+
+				var randomSorter = function(a, b) {
+					return [ -1, 0, 1 ][Math.floor(Math.random() * 3)]
+				}
+
+				var shuffle = R.sort(randomSorter)
+
+				// services
+
         
         $scope.score1;
         $scope.score2;
@@ -9,28 +23,23 @@ angular.module('games').controller('GamesController', ['$scope', '$stateParams',
         $scope.configure = {
             bracket: [
             [
-            {matchId: "m1", player1Score: 21, player2Score: 18, winner: "p1", player1Id: "p1", player2Id:"p2"},
-            {matchId: "m2", player1Score: 19, player2Score: 21, winner: "p4", player1Id: "p3", player2Id:"p4"},
-            {matchId: "m3", player1Score: 17, player2Score: 21, winner: "p6", player1Id: "p5", player2Id:"p6"},
-            {matchId: "m4", player1Score: 21, player2Score: 18, winner: "p7", player1Id: "p7", player2Id:"p8"},
+							{ matchId: "m1", player1Id: "p1", player2Id:"p2" },
+							{ matchId: "m2", player1Id: "p3", player2Id:"p4" },
+							{ matchId: "m3", player1Id: "p5", player2Id:"p6" },
+							{ matchId: "m4", player1Id: "p7", player2Id:"p8" },
             ],
-            [
-            {matchId: "m5", player1Score: 21, player2Score: 18, winner: "p1", player1Id: "p1", player2Id:"p4"},
-            {matchId: "m6", player1Score: 19, player2Score: 21, winner: "p7", player1Id: "p6", player2Id:"p7"},
-            ],
-            [
-            {matchId: "m8", player1Score: 19, player2Score: 21, winner: "p7", player1Id: "p1", player2Id:"p7"},
-            ]
+            [ ],
+            [ ]
             ],
             users: [
-            { userId: "p1", name: "p1", img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
-            { userId: "p2", name: "p2", img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
-            { userId: "p3", name: "p3", img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
-            { userId: "p4", name: "p4", img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
-            { userId: "p5", name: "p5", img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
-            { userId: "p6", name: "p6", img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
-            { userId: "p7", name: "p7", img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
-            { userId: "p8", name: "p8", img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'}
+							{ userId: "p1", name: "p1", img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
+							{ userId: "p2", name: "p2", img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
+							{ userId: "p3", name: "p3", img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
+							{ userId: "p4", name: "p4", img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
+							{ userId: "p5", name: "p5", img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
+							{ userId: "p6", name: "p6", img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
+							{ userId: "p7", name: "p7", img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'},
+							{ userId: "p8", name: "p8", img: 'http://pbs.twimg.com/profile_images/578419242246094848/WcYWKW2W_normal.png'}
             ]
         };
 
@@ -46,7 +55,6 @@ angular.module('games').controller('GamesController', ['$scope', '$stateParams',
             });
             game.$save(function(response) {
                 $location.path('games/' + response._id);
-
                 $scope.title = '';
                 $scope.content = '';
             }, function(errorResponse) {
@@ -83,7 +91,7 @@ angular.module('games').controller('GamesController', ['$scope', '$stateParams',
     $scope.createBracket = function(){
       console.log($scope.config.users);
       if ($scope.config.users.length > 1){
-        $scope.config.users = $scope.shuffle($scope.config.users);
+        $scope.config.users = shuffle($scope.config.users);
         $scope.createMatches();
         //$scope.config.started = true;
         $scope.config.$update();
@@ -169,6 +177,8 @@ angular.module('games').controller('GamesController', ['$scope', '$stateParams',
         gameId: $stateParams.gameId
       }).$promise.then(function(data){
         $scope.config = data;
+				$scope.config.users = $scope.configure.users
+				$scope.config.bracket = $scope.configure.bracket
         if (!$scope.config){
           $scope.initializeUI();
           $scope.refreshRounds();
@@ -176,6 +186,7 @@ angular.module('games').controller('GamesController', ['$scope', '$stateParams',
       });
     };
 
+// we should remove the jquery bits from here.. Angular or bust
 $scope.initializeUI = function() {
 
     console.log($scope.config);
@@ -183,46 +194,9 @@ $scope.initializeUI = function() {
 
     var $dom = $(document),
         $roundsWrapper = $('.rounds-wrapper'),
-        ROUND_WIDTH = 280,
-        isSwipping = false, // finger/mouse is doing swipe
-        isAnimating = false, // when containers are animating 
-        SWIPE_THRESHOLD = 40,
-        startSwipeX = 0,
-        currentSwipeX = 0,
-        modalIsOpen = false,
         $modalScore = $('#modal-match-score'),
         $backdrop = $('#backdrop'),
         $saveScoreForm = $('#form-save-score');
-
-        $dom
-        .on('mousedown touchstart', function(event){
-            if ( modalIsOpen ) return;
-            isSwipping = true;
-            startSwipeX = ( event.originalEvent.touches ) ? event.originalEvent.touches[0].pageX : event.pageX;
-        })
-        .on('mousemove touchmove', function(event){
-            if ( modalIsOpen || !isSwipping ) return;
-            currentSwipeX = ( event.originalEvent.touches ) ? event.originalEvent.touches[0].pageX : event.pageX;
-            if ( Math.abs( startSwipeX - currentSwipeX ) > SWIPE_THRESHOLD ) {
-                if ( startSwipeX > currentSwipeX ) 
-                    swipeLeft();
-                else 
-                    swipeRight();
-            }
-        })
-        .on('mouseup touchstop touchend', function(event){
-            isSwipping = false;
-            /* maybe...  maybe not...
-            // handle as click if we didn't scroll
-                if ( 
-                    Math.abs( startSwipeX - currentSwipeX ) > SWIPE_THRESHOLD &&
-                    !modalIsOpen 
-                ) {
-                    openScoreModal();
-            }
-            */
-            startSwipeX = currentSwipeX = 0;
-        });
 
         $(document).on('mouseup touchstop touchend', '.player-box', {}, function(event){
             var $box = $(event.currentTarget);
@@ -230,21 +204,55 @@ $scope.initializeUI = function() {
                 openScoreModal($box.data('round'), $box.data('match'));
         });
 
-        $backdrop.on('mouseup touchstop touchend', function(){
+				function hideModal() {
+						$scope.scoreModalIsOpen = false // this needs a refactor..
             $backdrop.fadeTo("slow" , 0,  function() { $backdrop.hide(); });
             $modalScore.fadeOut('fast',  function() { $modalScore.hide(); });
-        });
+				}
+
+        $backdrop.on('mouseup touchstop touchend', hideModal);
 
         $scope.saveScore = function(){
-            alert('TO DO! ' + $modalScore.data('round') + ' match: ' + $modalScore.data('match'));
             if ( $modalScore.data('round') && $modalScore.data('match') ) {
                 // you have all the info to be able to save to 
                 // $scope.config.bracket[round][match];
+								var round = $scope.config.bracket[$modalScore.data('round')]
+								var match = round[$modalScore.data('match')]
+								match.player1Score = $scope.score1
+								match.player2Score = $scope.score2
                 console.log('p1: ' + $scope.score1 + ', p2: ' + $scope.score2); 
+								moveForwardInBracket(round, match)
+								closeScoreModal()
             }        
         };
+
+				function moveForwardInBracket(round, match) {
+					var winnerId = parseInt(match.player1Score) > parseInt(match.player2Score) ? match.player1Id : match.player2Id
+					match.winner = winnerId
+					var nextRoundIndex = parseInt($modalScore.data('round')) + 1
+					var nextRound = $scope.config.bracket[nextRoundIndex]
+					if (!nextRound) return console.log('someone won?') // are we done with the tourny?
+					var waitingSlot = nextRound.filter(function(r) { return r.player1Id && !r.player2Id })[0]
+					if (waitingSlot) {
+						waitingSlot.player2Id = winnerId
+					} else {
+						nextRound.push({
+							matchId: "m4", player1Id: winnerId
+						})
+					}
+					$scope.refreshRounds()
+				}
+
+				function closeScoreModal() {
+					$scope.scoreModalIsOpen = false
+					hideModal()
+				}
         
         function openScoreModal(round, match){
+
+						if ($scope.scoreModalIsOpen) return
+						$scope.scoreModalIsOpen = true
+
             console.log('opening modal ~ round index:', round, ' ~ match index:', match);
             $backdrop.fadeTo("fast" , .8);
             $modalScore.data('round', round);
@@ -252,9 +260,14 @@ $scope.initializeUI = function() {
             $modalScore.fadeIn('slow');
             var data = $scope.config.bracket[round][match];
             console.log( "DATA:", data);
+						$scope.score1 = data.player1Score
+						$scope.score2 = data.player2Score
             $modalScore.find('h3.title').text('Table '+(match+1));
-            var user1 = $scope.getUserById(data.player1Id),
-                user2 = $scope.getUserById(data.player2Id);
+            var user1 = getUserById($scope.config.users, data.player1Id),
+                user2 = getUserById($scope.config.users, data.player2Id);
+
+						if (!user1 || !user2) return
+
             $modalScore.find('.player-1 img').attr('src', user1.img);
             $modalScore.find('.player-1 p').text(user1.name);
             $modalScore.find('.player-2 img').attr('src', user2.img);
@@ -264,32 +277,11 @@ $scope.initializeUI = function() {
             $modalScore.find('.player-1 p').text(user1.name);
             $modalScore.find('.player-2 img').attr('src', user2.img);
             $modalScore.find('.player-2 p').text(user2.name);
-                        
+
+						$scope.$apply()
         }
 
-        function swipeLeft(){
-            if ( isAnimating ) return;      
-            var currentLeft = $roundsWrapper.css('margin-left').replace('px', '');
-            isAnimating = true;
-            if ( currentLeft > -ROUND_WIDTH ) 
-                $roundsWrapper.animate({'margin-left':(-ROUND_WIDTH)+'px'}, 300, function() { isAnimating = false; });
-            else if ( currentLeft > -ROUND_WIDTH*2 ) 
-                $roundsWrapper.animate({'margin-left':(-ROUND_WIDTH*2)+'px'}, 300, function() { isAnimating = false; });
-            else 
-                $roundsWrapper.animate({'margin-left':(-ROUND_WIDTH*3)+'px'}, 300, function() { isAnimating = false; });
-        }
-
-        function swipeRight(){
-            if ( isAnimating ) return;      
-            var currentLeft = $roundsWrapper.css('margin-left').replace('px', '');
-            isAnimating = true;
-            if ( currentLeft < -ROUND_WIDTH*2 ) 
-                $roundsWrapper.animate({'margin-left':(-ROUND_WIDTH*2)+'px'}, 300, function() { isAnimating = false; });
-            else if ( currentLeft < -ROUND_WIDTH ) 
-                $roundsWrapper.animate({'margin-left':(-ROUND_WIDTH)+'px'}, 300, function() { isAnimating = false; });
-            else 
-                $roundsWrapper.animate({'margin-left':'0px'}, 300, function() { isAnimating = false; });
-        } 
+				// allowing native scrolling.. less code, smoother performance
     };
 
     $scope.refreshRounds = function() {
@@ -300,6 +292,8 @@ $scope.initializeUI = function() {
         numRounds , numMatches, r, m, count,
         round = null, $roundElem, $matchesWrapper, $matchElem,
         match = null, user1, user2;
+				var heightPerRound = 70
+				var heightBuffer = 10
 
         // $.each($rounds, function( index, value ) {
         //  if ( index == numRounds ) $($rounds[index]).addClass('active');
@@ -318,26 +312,35 @@ $scope.initializeUI = function() {
                         match = round[m];
                         
                         $matchElem = $template.contents().clone();
-                        user1 = $scope.getUserById(match.player1Id);
-                        user2 = $scope.getUserById(match.player2Id);
+                        user1 = getUserById($scope.config.users, match.player1Id);
+                        user2 = getUserById($scope.config.users, match.player2Id);
                         /** make the logic dynamic to handle deeper brackets **/
-                        if ( r == 0)
-                            $matchElem.css('height', '80px').css('padding-top', '10px');
-                        else if ( r == 1)
-                            $matchElem.css('height', '170px').css('padding-top', '60px');
-                        else if ( r == 2)
-                            $matchElem.css('height', '350px').css('padding-top', '150px');
+
+												if (!user1 && !user2) continue
+
+												// this is to replace the hard-coded stuff underneath.
+												// I got rid of the padding requirement by using flexbox in CSS.. but
+												// there is more to do here to get the rounds sized correctly
+												var height = ((heightPerRound + heightBuffer) * (r + 1)) + (heightBuffer * r)
+												$matchElem.css('height', height + 'px') 
                         
                         $matchElem.addClass('round-'+(r+1));
                         $matchElem.addClass('match-'+(m+1));
                         $matchElem.data( 'round', r+'');
                         $matchElem.data( 'match', m+'');
                         // $matchElem.css({'height': (MATCH_HEIGHT * (r+1) + (20*(r+1)))+'px', 'padding-top': (MATCH_PADDING)+'px' })
-                        $matchElem.find('.player-1 img').attr('src', user1.img);
-                        $matchElem.find('.player-1 p').text(user1.name);
+												if (user1) {
+													$matchElem.find('.player-1 img').attr('src', user1.img);
+													$matchElem.find('.player-1 p').text(user1.name);
+												}
+
                         $matchElem.find('.vs').text('Table '+(m+1));
-                        $matchElem.find('.player-2 img').attr('src', user2.img);
-                        $matchElem.find('.player-2 p').text(user2.name);
+
+												if (user2) {
+													$matchElem.find('.player-2 img').attr('src', user2.img);
+													$matchElem.find('.player-2 p').text(user2.name);
+												}
+
                         $matchesWrapper.append( $matchElem );
                         
 
@@ -353,7 +356,7 @@ $scope.initializeUI = function() {
                 // check if we have a winner
                 if ( numRounds > 2 && $scope.config.bracket[2] != '' ) {
                     match = $scope.config.bracket[2][0];
-                    if ( !match )return;
+                    if ( !match || !match.winner )return;
                     $roundElem = $($rounds[3]);
                     $matchElem = $templateWinner.contents().clone();
                     $matchElem.addClass('round-4');
@@ -361,7 +364,7 @@ $scope.initializeUI = function() {
                     $matchElem.data( 'round', 3);
                     $matchElem.data( 'match', 0);
 
-                    user1 = $scope.getUserById(match.winner);
+                    user1 = getUserById($scope.config.users, match.winner);
                     $matchesWrapper = $roundElem.find('.matches-wrapper');
                     $matchElem.find('.winner img').attr('src', user1.img);
                     $matchElem.find('.winner p').text(user1.name);
@@ -370,32 +373,7 @@ $scope.initializeUI = function() {
                 }
 
             };
-    
-            $scope.getUserById = function(id){
-                for ( var i=0, l=$scope.config.users.length; i<l; i++ ) 
-                    if ( id == $scope.config.users[i].userId ) 
-                        return $scope.config.users[i];
-                    return null;
-                }
-  $scope.shuffle = function(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex ;
 
-    // While there remain elements to shuffle...
-    while (0 !== currentIndex) {
-
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-
-      // And swap it with the current element.
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
-    }
-
-    return array;
-  }
-
-            }
-        ]
-    );
+				}
+		]
+);

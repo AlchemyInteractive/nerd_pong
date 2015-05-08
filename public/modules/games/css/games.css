@@ -10,7 +10,6 @@ body {
   text-align: center; }
 
 .brackets.main {
-  overflow-x: hidden;
   min-height: 400px;
   color: #fff;
   font-family: 'Open Sans', sans-serif; }
@@ -43,7 +42,9 @@ body {
   text-align: center;
   margin: 5px auto;
   float: left;
-  display: block; }
+  display: flex;
+  align-items: center;
+  justify-content: center; }
   .player-box ul {
     width: 240px;
     margin: 0 auto;
@@ -117,5 +118,3 @@ body {
   /* Rules below not implemented in browsers yet */
   -o-user-select: none;
   user-select: none; }
-
-/*# sourceMappingURL=games.css.map */
